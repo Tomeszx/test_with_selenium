@@ -25,12 +25,9 @@ class BaseElement(object):
         self.locator = locator
         self.selector = selector
         self.driver = driver
-        stack = inspect.stack()
-        self.var_name = stack[2].code_context[0].strip().split()[0]
 
     def __repr__(self) -> str:
-        element = self.var_name.replace("self.", "")
-        return f'<{element=} {self.selector=}>'
+        return f'{self.selector=}'
 
     def __iter__(self) -> Iterator[WebElement]:
         return iter(self.elements)
@@ -83,13 +80,10 @@ class BaseElement(object):
         :param args: string|[string]
         """
         original_selector = self.selector
-        original_var_name = self.var_name
         try:
             self.selector = original_selector.format(*args, **kwargs)
-            self.var_name += "-" + "_".join(str(arg) for arg in (*args, *kwargs.values()))
             yield self
         finally:
-            self.var_name = original_var_name
             self.selector = original_selector
 
     def is_clickable(self, timeout: int = BASIC_TIMEOUT) -> bool:
