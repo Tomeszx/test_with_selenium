@@ -3,7 +3,7 @@ ____________________________________________________
 ## In order to run the script:
 ### 1. Install uv to run the script:
 ```
-pip install -r requirements.txt
+pip install uv
 ```
 ### 2. You're got to go!
 ```
